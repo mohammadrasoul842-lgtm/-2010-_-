@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار تاريخ الأردن - الصف الأول الثانوي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --accent: #d97706;
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --success-bg: #ecfdf5;
+    --danger: #ef4444;
+    --danger-bg: #fef2f2;
+    --border: #e2e8f0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+  font-family: 'Amiri', serif;
+  background: var(--bg-main);
+  margin: 0;
+  padding: 0;
+  color: var(--text-main);
+  line-height: 1.8; /* يفضل زيادة ارتفاع السطر قليلاً لخط أميري ليعطي مظهرًا أجمل */
+}
+
+
+  .container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  /* Screen Views Control */
+  .screen {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  .screen.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Header & Title Card */
+  .header-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 32px 24px 20px 24px;
+    text-align: center;
+    box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.25);
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .header-card h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .header-card p {
+    margin: 0 0 16px 0;
+    opacity: 0.9;
+    font-size: 15px;
+  }
+
+  /* Developer Badge & Exact Facebook Verified SVG */
+  .developer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .fb-verified-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  /* Welcome Screen Form */
+  .welcome-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .input-group {
+    margin: 24px 0;
+    text-align: right;
+  }
+
+  .input-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-main);
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  .input-group input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Question Cards */
+  .question-card {
+    background: var(--card-bg);
+    margin-bottom: 20px;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border);
+  }
+
+  .question-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin: 8px 0;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 15px;
+  }
+
+  .option-label:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+
+  .option-label input[type="radio"] {
+    margin-left: 12px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-light);
+  }
+
+  /* States after grading */
+  .correct {
+    background: var(--success-bg) !important;
+    border-color: var(--success) !important;
+    color: #065f46;
+    font-weight: 600;
+  }
+
+  .wrong {
+    background: var(--danger-bg) !important;
+    border-color: var(--danger) !important;
+    color: #991b1b;
+  }
+
+  .unanswered {
+    border: 2px solid #f59e0b !important;
+  }
+
+  /* Buttons */
+  .btn {
+    border: 0;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--primary-light);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: #64748b;
+    color: #fff;
+  }
+
+  .btn-secondary:hover {
+    background: #475569;
+  }
+
+  .actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Certificate / Result Card */
+  .result-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 2px solid var(--primary-light);
+    margin-bottom: 24px;
+  }
+
+  .student-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: var(--primary);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .score-badge {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 16px 0;
+  }
+
+  .result-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+  }
+
+  @media(max-width: 600px) {
+    .container { padding: 16px 12px; }
+    .header-card { padding: 24px 16px 16px 16px; }
+    .header-card h1 { font-size: 22px; }
+    .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header Section -->
+  <header class="header-card">
+    <h1>اختبار تاريخ الأردن — الأول الثانوي</h1>
+    <h1/>2010 <h1>
+    <p>شامل للدروس الأربعة المطلوبة (40 سؤال اختيار من متعدد)</p>
+    
+    <!-- Developer Signature with Exact Facebook Verified Badge -->
+    <div class="developer-badge">
+      <span>تطوير:  محمد رسول عنبر</span>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- الخلفية الزرقاء ذات البروز والأسنان النجمية الحادة والواضحة -->
+  <path fill="#1DA1F2" fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5l2.22 1.35 2.52-.61 1.09 2.36 2.56.46-.11 2.59 2.11 1.51-1.31 2.24 1.31 2.24-2.11 1.51.11 2.59-2.56.46-1.09 2.36-2.52-.61L12 22.5l-2.22-1.35-2.52.61-1.09-2.36-2.56-.46.11-2.59-2.11-1.51 1.31-2.24-1.31-2.24 2.11-1.51-.11-2.59 2.56-.46 1.09-2.36 2.52.61L12 1.5z"/>
+  <!-- علامة الصح البيضاء الحادة والبارزة -->
+  <path fill="#FFFFFF" d="M10 15.5l-3.5-3.5 1.42-1.42L10 12.67l6.08-6.09 1.42 1.42L10 15.5z"/>
+</svg>
+
+
+    </div>
+  </header>
+
+  <!-- Screen 1: Student Name Entry -->
+  <div id="welcomeScreen" class="screen active">
+    <div class="welcome-card">
+      <h2>أهلاً بك في الاختبار الإلكتروني</h2>
+     <p style="color: var(--text-muted);">أدخل اسمك الحقيقي أو المستعار</p>
+
+      <div class="input-group">
+        <label for="studentName">اسم الطالب/ـة الكريم:</label>
+        <input type="text" id="studentName" placeholder="أدخل اسمك هنا..." autocomplete="off">
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%;" onclick="startQuiz()">ابدأ الاختبار الآن ←</button>
+      جميع الحقوق محفوظة 2026©
+    </div>
+  </div>
+
+  <!-- Screen 2: Quiz & Questions -->
+  <div id="quizScreen" class="screen">
+    <div id="questionsContainer"></div>
+    
+    <div id="resultCard" class="result-card" style="display: none;"></div>
+
+    <div class="actions">
+      <button id="gradeBtn" class="btn btn-primary" onclick="grade()">تصحيح الاختبار وإنهاء</button>
+      <button class="btn btn-secondary" onclick="resetQuiz()">إعادة الاختبار</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {"q": "في أي عصر بدأ الإنسان في الأردن باستخدام الأدوات الحجرية المصنوعة بصورة بدائية؟", "options": ["العصر الحديدي", "العصر البرونزي", "العصر الروماني", "العصر الحجري القديم"], "answer": 3},
+  {"q": "من أبرز المواقع التي ارتبطت بالعصر الحجري القديم في الأردن:", "options": ["أم قيس", "جرش", "وادي رم", "وادي الحسا"], "answer": 3},
+  {"q": "اتجه الإنسان في العصر الحجري الحديث إلى الاستقرار بسبب:", "options": ["بناء المدن الرومانية", "اكتشاف الكتابة", "ممارسة الزراعة وتدجين الحيوانات", "استخدام الحديد"], "answer": 2},
+  {"q": "من أبرز مظاهر الاستقرار في العصر الحجري الحديث:", "options": ["بناء المساكن والقرى", "سك النقود", "بناء المدرجات الرومانية", "استخدام الأبجدية اليونانية"], "answer": 0},
+  {"q": "يُعد موقع عين غزال من المواقع الأثرية المهمة التي تعود إلى:", "options": ["العصر الحديدي", "العصر النبطي", "العصر البيزنطي", "العصر الحجري الحديث"], "answer": 3},
+  {"q": "من أهم ما يميز العصر الحجري النحاسي في الأردن:", "options": ["بناء المدن العشر", "قيام الدولة النبطية", "استخدام النحاس إلى جانب الحجر", "ظهور الكتابة اليونانية"], "answer": 2},
+  {"q": "اعتمد الإنسان في العصور الحجرية على الصيد وجمع النباتات ثم تطور لاحقًا إلى:", "options": ["الكتابة اللاتينية", "الزراعة وتربية الحيوانات", "التجارة البحرية", "سك النقود"], "answer": 1},
+  {"q": "تدل تماثيل عين غزال على تطور واضح في:", "options": ["الفن وصناعة التماثيل", "النظم الرومانية", "العمارة النبطية", "الجيش اليوناني"], "answer": 0},
+  {"q": "من نتائج اكتشاف الزراعة في الأردن خلال العصور الحجرية:", "options": ["انتهاء استخدام الحجر", "ظهور الديكابوليس", "قيام الإمبراطورية الرومانية", "الاستقرار وتكوين القرى"], "answer": 3},
+  {"q": "كان الحجر من أهم المواد التي استخدمها الإنسان القديم في:", "options": ["كتابة القوانين الرومانية", "بناء الكنائس البيزنطية", "صناعة الأدوات والأسلحة", "سك العملات"], "answer": 2},
+  {"q": "ارتبط العصر الحديدي في الأردن بظهور عدد من الممالك القديمة، ومنها:", "options": ["مملكة الأنباط فقط", "مملكة مؤاب", "الدولة العباسية", "الدولة الأموية"], "answer": 1},
+  {"q": "من الممالك التي قامت في جنوبي الأردن خلال العصر الحديدي:", "options": ["أدوم", "البطالمة", "السلوقيون", "البيزنطيون"], "answer": 0},
+  {"q": "قامت مملكة مؤاب بصورة رئيسة في منطقة:", "options": ["شمال غرب الأردن", "جنوب سيناء", "ساحل البحر المتوسط", "وسط الأردن شرق نهر الأردن"], "answer": 3},
+  {"q": "من أشهر ملوك مؤاب الذي ارتبط اسمه بمسلة ميشع:", "options": ["عبادة الأول", "تراجان", "ميشع", "الحارث الثالث"], "answer": 2},
+  {"q": "تُعد مسلة ميشع مصدرًا مهمًا لدراسة تاريخ:", "options": ["البيزنطيين", "مملكة مؤاب", "مملكة الأنباط", "الرومان"], "answer": 1},
+  {"q": "قامت مملكة أدوم في:", "options": ["جنوب الأردن", "شمال الأردن", "وادي الأردن الأوسط فقط", "شرق جرش"], "answer": 0},
+  {"q": "ارتبطت مملكة عمون بصورة أساسية بمنطقة:", "options": ["جنوب الأردن وعاصمتها البتراء", "وادي رم وعاصمتها جرش", "العقبة وعاصمتها أم قيس", "شمال ووسط الأردن وعاصمتها ربة عمون"], "answer": 3},
+  {"q": "من العوامل التي ساعدت على قيام الممالك في العصر الحديدي:", "options": ["قيام الديكابوليس", "احتلال الرومان للأردن", "تطور الزراعة والاستقرار واستغلال الموارد", "ظهور المسيحية"], "answer": 2},
+  {"q": "من أهم المعادن التي انتشر استخدامها في العصر الحديدي:", "options": ["البلاستيك", "الحديد", "الألمنيوم", "اليورانيوم"], "answer": 1},
+  {"q": "تميزت الممالك الأردنية في العصر الحديدي بـ:", "options": ["وجود نظم سياسية ومراكز عمرانية واقتصادية", "اعتمادها الكامل على المدن الرومانية", "استخدام النقود البيزنطية فقط", "بناء الكنائس"], "answer": 0},
+  {"q": "ما عاصمة مملكة الأنباط؟", "options": ["جرش", "أم قيس", "مادبا", "البتراء"], "answer": 3},
+  {"q": "ازدهرت مملكة الأنباط بصورة كبيرة بسبب سيطرتها على:", "options": ["الطرق البحرية في المحيط الأطلسي", "المدن اليونانية في اليونان", "طرق التجارة", "مناجم الذهب في أوروبا"], "answer": 2},
+  {"q": "من أشهر المظاهر الحضارية التي اشتهر بها الأنباط:", "options": ["بناء الأهرامات", "الهندسة المائية ونحت المباني في الصخر", "بناء الكولوسيوم في روما", "اختراع الطباعة"], "answer": 1},
+  {"q": "من أهم السلع التي ارتبطت بتجارة الأنباط:", "options": ["البخور والتوابل", "الفحم الحجري فقط", "الحرير الصيني فقط", "النفط الخام"], "answer": 0},
+  {"q": "الملك النبطي الذي استغل الصراع بين البطالمة والسلوقيين ووسع حدود مملكته حتى دمشق هو:", "options": ["ميشع", "تراجان", "بومبي", "الحارث الثالث"], "answer": 3},
+  {"q": "احتل الرومان مملكة الأنباط سنة:", "options": ["332ق.م", "395م", "106م", "64ق.م"], "answer": 2},
+  {"q": "بعد ضم مملكة الأنباط إلى الدولة الرومانية أصبحت أراضيها جزءًا من:", "options": ["الإمبراطورية البيزنطية مباشرة", "الولاية العربية", "دولة البطالمة", "الدولة السلوقية"], "answer": 1},
+  {"q": "من أشهر منشآت الأنباط المائية:", "options": ["السدود والقنوات والصهاريج", "المدرجات الرومانية فقط", "الكنائس البازليكية", "الحمامات البيزنطية فقط"], "answer": 0},
+  {"q": "تُظهر النقود النبطية تأثر الأنباط بالحضارة اليونانية من حيث:", "options": ["اللغة العربية فقط", "مواد البناء", "نظام الحكم", "الشكل"], "answer": 3},
+  {"q": "من العوامل التي ساعدت الأنباط على ازدهار دولتهم:", "options": ["اعتمادهم على الزراعة فقط", "ضعف موقع البتراء التجاري", "الموقع الجغرافي والسيطرة على طرق التجارة", "العزلة عن طرق التجارة"], "answer": 2},
+  {"q": "خضع الأردن لسيطرة اليونان بعد احتلال الإسكندر المقدوني لمصر وبلاد الشام سنة:", "options": ["106م", "332ق.م", "323م", "64ق.م"], "answer": 1},
+  {"q": "بعد وفاة الإسكندر المقدوني، كانت مصر وجزء من بلاد الشام من نصيب:", "options": ["بطلميوس", "سلوقس", "أنتيغونوس", "تراجان"], "answer": 0},
+  {"q": "أصبحت بقية بلاد الشام والعراق وفارس من نصيب:", "options": ["بطلميوس", "ميشع", "بومبي", "سلوقس"], "answer": 3},
+  {"q": "من المواقع الأردنية المرتبطة بالفترة اليونانية:", "options": ["قلعة الكرك", "قلعة عجلون", "جدارا (أم قيس)", "البتراء فقط"], "answer": 2},
+  {"q": "من أبرز الآثار التي بقيت قائمة من الفترة اليونانية في الأردن:", "options": ["نفق اليرموك", "قصر عراق الأمير (قصر العبد)", "المدرج الروماني في عمان", "كنيسة أم الرصاص"], "answer": 1},
+  {"q": "خضع معظم الأردن بالحكم الروماني بعد احتلال القائد بومبي بلاد الشام سنة:", "options": ["64ق.م", "332ق.م", "106م", "395م"], "answer": 0},
+  {"q": "كانت مدن الديكابوليس تتمتع في العهد الروماني بنوع من:", "options": ["الاستقلال عن روما تمامًا", "الحكم البيزنطي", "التبعية للأنباط", "الاستقلال السياسي والإدارة المحلية"], "answer": 3},
+  {"q": "من مظاهر الحضارة الرومانية في الأردن:", "options": ["الزقورات", "المعابد الفرعونية", "المدرجات والأسواق والشوارع المبلطة والحمامات", "الأهرامات"], "answer": 2},
+  {"q": "من أبرز مظاهر الحقبة البيزنطية في الأردن:", "options": ["ظهور الممالك الحديدية", "انتشار الكنائس والأديرة وازدهار الفسيفساء", "انتشار الديكابوليس", "توسع مملكة الأنباط"], "answer": 1},
+  {"q": "القسطنطينية كانت عاصمة:", "options": ["الإمبراطورية الرومانية الشرقية (البيزنطية)", "مملكة الأنباط", "الدولة السلوقية", "مملكة مؤاب"], "answer": 0}
+];
+
+let currentStudentName = "";
+
+function startQuiz() {
+  const nameInput = document.getElementById('studentName');
+  if (!nameInput.value.trim()) {
+    alert('لطفاً، أدخل اسمك الكريم لمتابعة الاختبار.');
+    return;
+  }
+  currentStudentName = nameInput.value.trim();
+  
+  document.getElementById('welcomeScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  renderQuestions();
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  
+  questions.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'question-card';
+    box.id = 'q' + i;
+    
+    let optionsHtml = item.options.map((op, j) => `
+      <label class="option-label">
+        <input type="radio" name="q${i}" value="${j}">
+        <span>${op}</span>
+      </label>
+    `).join('');
+    
+    box.innerHTML = `<h3>${i + 1}. ${item.q}</h3>${optionsHtml}`;
+    container.appendChild(box);
+  });
+}
+
+function grade() {
+  let score = 0;
+  let answered = 0;
+
+  questions.forEach((item, i) => {
+    const box = document.getElementById('q' + i);
+    const labels = box.querySelectorAll('.option-label');
+    labels.forEach(x => x.classList.remove('correct', 'wrong'));
+
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (selected) {
+      answered++;
+      const val = Number(selected.value);
+      if (val === item.answer) {
+        score++;
+        selected.parentElement.classList.add('correct');
+      } else {
+        selected.parentElement.classList.add('wrong');
+        labels[item.answer].classList.add('correct');
+      }
+      box.classList.remove('unanswered');
+    } else {
+      box.classList.add('unanswered');
+      labels[item.answer].classList.add('correct');
+    }
+  });
+
+  const pct = Math.round((score / questions.length) * 100);
+  const resultCard = document.getElementById('resultCard');
+  resultCard.style.display = 'block';
+  
+  resultCard.innerHTML = `
+    <div class="student-badge">الطالب/ـة: ${currentStudentName}</div>
+    <h3>نتيجة الاختبار النهائي</h3>
+    <div class="score-badge">${score} / ${questions.length} (${pct}%)</div>
+    <p style="color: var(--text-muted); margin: 0;">
+      تمت الإجابة على ${answered} من أصل ${questions.length} سؤالاً.<br>
+      تظهر الإجابات الصحيحة باللون الأخضر، والخاطئة باللون الأحمر.
+    </p>
+    <div class="result-footer">
+      <div class="developer-badge" style="background: #f1f5f9; color: var(--text-main); border-color: var(--border);">
+        <span>برمجة وتطوير: المطور محمد رسول عنبر</span>
+        <svg class="fb-verified-icon" viewBox="0 0 24 24" aria-label="حساب موثق">
+          <path fill="#0084FF" d="M12,2 C13.3,2 14.5,2.6 15.3,3.6 C16.5,3.3 17.8,3.7 18.6,4.6 C19.5,5.5 19.8,6.8 19.6,8 C20.6,8.8 21.1,10 21.1,11.3 C21.1,12.6 20.5,13.8 19.6,14.6 C19.8,15.8 19.5,17.1 18.6,18 C17.7,18.9 16.4,19.3 15.2,19 C14.4,20 13.2,20.6 11.9,20.6 C10.6,20.6 9.4,20 8.6,19 C7.4,19.3 6.1,18.9 5.2,18 C4.3,17.1 4,15.8 4.2,14.6 C3.3,13.8 2.7,12.6 2.7,11.3 C2.7,10 3.3,8.8 4.2,8 C4,6.8 4.3,5.5 5.2,4.6 C6.1,3.7 7.4,3.3 8.6,3.6 C9.5,2.6 10.7,2 12,2 Z"></path>
+          <path fill="#FFFFFF" d="M9.8,15.2 C9.5,15.2 9.2,15.1 9,14.8 L6.6,12.4 C6.2,12 6.2,11.3 6.6,10.9 C7,10.5 7.7,10.5 8.1,10.9 L9.8,12.6 L15.1,7.3 C15.5,6.9 16.2,6.9 16.6,7.3 C17,7.7 17,8.4 16.6,8.8 L10.6,14.8 C10.4,15.1 10.1,15.2 9.8,15.2 Z"></path>
+        </svg>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('gradeBtn').style.display = 'none';
+  resultCard.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  document.getElementById('studentName').value = '';
+  document.getElementById('resultCard').style.display = 'none';
+  document.getElementById('gradeBtn').style.display = 'inline-flex';
+  document.getElementById('quizScreen').classList.remove('active');
+  document.getElementById('welcomeScreen').classList.add('active');
+}
+</script>
+</body>
+</html>
