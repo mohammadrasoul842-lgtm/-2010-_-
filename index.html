@@ -649,6 +649,25 @@ function grade() {
   });
 
   const pct = Math.round((score / questions.length) * 100);
+    // ==========================================
+  //  إرسال البيانات تلقائياً إلى Google Sheets
+  // ==========================================
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxi4QJUGx1IYciwvulaEddWY1A8m7omCoOLyIiLG9MDx6dlI3AhJzPJWUHZsN8Xc5IC/exec";
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: currentStudentName,
+      score: score,
+      total: questions.length,
+      percentage: pct,
+      date: new Date().toLocaleString("ar-JO")
+    })
+  }).catch(err => console.log(err));
+  // ==========================================
+
   const resultCard = document.getElementById('resultCard');
   resultCard.style.display = 'block';
   
